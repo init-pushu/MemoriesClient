@@ -18,8 +18,10 @@ export const getPosts = (page) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data: { data, currentPage, numberOfPages } } = await api.fetchPosts(page);
+    
 
     dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
+    swal("Welcome");
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
@@ -93,6 +95,7 @@ export const likePost = (id) => async (dispatch) => {
     const { data } = await api.likePost(id, user?.token);
 
     dispatch({ type: LIKE, payload: data });
+    swal("Post Successfully liked");
   } catch (error) {
     console.log(error);
   }
@@ -103,6 +106,7 @@ export const commentPost = (value, id) => async (dispatch) => {
     const { data } = await api.comment(value, id);
 
     dispatch({ type: COMMENT, payload: data });
+    swal("Comment Successfully Added");
 
     return data.comments;
   } catch (error) {
